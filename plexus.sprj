@@ -1,0 +1,17 @@
+[Iamabstprojectfile]
+Iamthemagicnumber=1
+
+[Main]
+SelectedTab=0
+TreePath=\\Mac\Home\Documents\GitHub\PLEXUS\Plexus\SD_Variante
+NumSubs=2
+OverrideOptimisation=0
+OptimiseFlags=0
+
+[File1]
+FileName=\\Mac\Home\Documents\GitHub\PLEXUS\Plexus\SD_Variante\Plexus-Start-Trios.spin
+TopLine=1
+
+[File2]
+FileName=\\Mac\Home\Documents\GitHub\PLEXUS\Plexus\SD_Variante\Plexus-Shell.spin
+TopLine=1
