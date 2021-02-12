@@ -1,0 +1,89 @@
+Key      Function
+============================
+F1       Display Help
+F2       File-Explorer
+F3       Programs
+F4       Display Cog-Usage
+F5       Serial Terminal
+F6       System-Info
+F7       Clock-Settings
+F8       Color-Settings
+F9       Ram-Monitor
+F10      Sid-Dmp-Player
+F11      Calendar
+F12      Reboot Plexus
+Alt+F1   About-Box
+Alt+F2   System-Settings
+Alt+F3   extended Titlebar
+Alt+F5   Baud-Select
+Alt+F12  Reboot TRIOS
+M        Mount/Unmount
+I        SD-Card-Info
+F        Format SD-Card
+E        empty Trash
+T        Display Trash
+L+1..3   Start Link 1..3
+Del+1..3 Delete Link 1..3
+P+1..3   Link-Parameter 1..3
+ESC      Delete Window
+============================
+Explorer
+I        File-Info
+S        Show File
+L        Make Link
+R        Rename File
+N        New Dir
+C        Copy File
+P        Paste File
+Cursor   Select File
+Enter    Start File(bin etc)
+Del      Delete File
+Y        Send File(YMODEM)
+Z        Receive File(YMODEM)
+============================
+File-Info
+R        Toogle Attr. R/O
+H        Toogle Attr. Hid
+S        Toogle Attr. Sys
+A        Toogle Attr. Arch
+============================
+Systeminfo
+1..3     select Tab
+============================
+Clock-Date-Setting
+Tab      Select Value
+Cur-up   increment Value
+Cur-dn   decrement Value
+ESC      Cancel
+Enter    OK
+============================
+Color-Setting
+Cursor   select Object
+Tab      select Value
+ESC      Cancel
+Enter    OK
+============================
+RAM-Monitor
+H        select H-RAM
+E        select E-RAM
+Tab      Input Adress
+Enter    Input/Enter Bytes
+============================
+DMP-Player
++        next Title
+-        previous Title
+Space    Stop or Play
+ESC      Cancel
+============================
+Baud Settings
+Cursor   select Baudrate
+Enter    Enter Value
+============================
+System Settings
+S        Show Hidden Files
+U        Use Trash
+D        Use DCF-Receiver
+B        Use HC05-Bluetooth
+============================
+Program  Window
+1..6     Select Program

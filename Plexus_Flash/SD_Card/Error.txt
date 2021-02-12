@@ -1,0 +1,81 @@
+Filesys unmounted
+Filesys corrupted
+Filesys unsupported
+not found
+File not found
+Directory not found
+File read only
+End of File-Error
+End of Directory
+End of Root
+Directory is full
+Directory is not empty
+Checksum Error
+Reboot Error
+bpb corrupt
+Filesys corrupt
+Directory already exist
+File exist,overwrite?
+Out of Disk Space
+Disk  I/O  Error
+Command not found
+Timeout Error
+Out of Memory Error
+Delete selected File?
+Reboot Hive-Computer?
+NO FILE SELECTED
+SD-CARD Format Ready
+Format SD-CARD ?
+Delete selected Link?
+Delete all Files?
+Trash to empty ?
+SD-Card-Info
+File-Info
+Calendar
+Filename:
+Filetype:
+Directory
+File
+- Attribute -
+R/O HID SYS ARC
+Textdisplay
+Startmenue
+Administra:
+Bellatrix :
+Regnatix  :
+System-Settings
+Show hid.Files:
+Use Trash     :
+Serial-Terminal
+Set Baudrate
+Systeminfo
+Clock-Settings
+Color-Settings
+Ram-Monitor
+Sid-Dmp-Player
+Copy  :
+Delete:
+Venatrix  :
+Start-Parameter
+Venatrix-BUS:
+Sepia-Card  :
+Cogs
+About
+Date
+Time
+Col:
+H-RAM:
+E-RAM:
+DCF-77   :
+HC05     :
+Explorer
+Option
+Detect-Hardware
+Receive File ...
+No Response from Host
+Transmission complete
+Send File...
+Timeout failure!
+Reboot Hive whith TRIOS?
+EEPROM:
+FLASH:
