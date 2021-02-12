@@ -38,6 +38,7 @@ Logbuch         :
                   -Venatrix-Test, DCF-Test entfernt, braucht man nicht
                   -Mauspfeil wird nach dem Starten von Plexus nicht korrekt angezeigt!? liegt das an der Ini Datei?
                   -nach dem Laden einer Mau-Datei ist die Anzeige korrekt.
+                  -Update... Mauspfeil wird jetzt richtig dargestellt (in der Ini-Load-Routine war ein 2Byte Versatz) ->behoben
                   -1256 Longs frei
 
 Notizen         : Window 0 = Hauptbildschirm, darf nicht anderweitig genutzt werden !!!

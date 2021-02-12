@@ -334,7 +334,7 @@ PRI iniload:err|i,tmp
           err:=0
           i:=SETTING_RAM
           '---- SYSTEM-SETTINGS IN DEN RAM LADEN -------------
-          repeat 18
+          repeat 21
                ios.ram_wrbyte(ios.sdgetc,i++)
           tmp:=i
           '---- DESKTOP-VERKNÜPFUNGEN IN DEN RAM LADEN -------
