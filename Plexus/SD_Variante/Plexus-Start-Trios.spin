@@ -34,6 +34,9 @@ Logbuch         :
 '############################################# VERSION 1.02 #################################################################################################################
 19-03-2014        -Laderoutine für die Error-und Systemtexte geändert, jeder Text hat jetzt eine feste Adresse, ist beim laden zwar langsamer aber die Texte
                   -werden viel schneller aus dem Ram geladen und angezeigt, egal wieviele Texte vorhanden sind
+'############################################# VERSION 1.03 #################################################################################################################
+12-02-2021        -Iniload-Routine korrigiert (2Byte Versatz beim Laden) dadurch wurde der Mauspfeil falsch dargestellt
+
 }}
 
 OBJ

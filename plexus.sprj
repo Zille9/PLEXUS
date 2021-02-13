@@ -4,14 +4,30 @@ Iamthemagicnumber=1
 [Main]
 SelectedTab=0
 TreePath=\\Mac\Home\Documents\GitHub\PLEXUS\Plexus\SD_Variante
-NumSubs=2
+NumSubs=6
 OverrideOptimisation=0
 OptimiseFlags=0
 
 [File1]
 FileName=\\Mac\Home\Documents\GitHub\PLEXUS\Plexus\SD_Variante\Plexus-Start-Trios.spin
-TopLine=1
+TopLine=218
 
 [File2]
 FileName=\\Mac\Home\Documents\GitHub\PLEXUS\Plexus\SD_Variante\Plexus-Shell.spin
-TopLine=1
+TopLine=3298
+
+[File3]
+FileName=\\Mac\Home\Documents\GitHub\PLEXUS\Plexus\SD_Variante\DLL\DOS-Shell\dos-shell.spin
+TopLine=597
+
+[File4]
+FileName=\\Mac\Home\Documents\GitHub\PLEXUS\Plexus\SD_Variante\DLL\DOS-Shell\ZShell_PL.spin
+TopLine=192
+
+[File5]
+FileName=\\Mac\Home\Documents\GitHub\PLEXUS\Plexus\SD_Variante\DLL\DOS-Shell\Original_ZShell.spin
+TopLine=32
+
+[File6]
+FileName=\\Mac\Home\Documents\GitHub\PLEXUS\Plexus\SD_Variante\reg-ios-Modul.spin
+TopLine=343

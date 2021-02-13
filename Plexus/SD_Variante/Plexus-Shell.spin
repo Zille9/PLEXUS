@@ -35,11 +35,11 @@ Logbuch         :
 
 12-02-2021        -einige Funktionen des Programmsfesters entfernt, Programmteile sind mittlerweile überholt und nicht mehr sinnvoll
                   -als DOS-Shell wird eine Variante der ZShell verwendet (fehlt noch)
-                  -Venatrix-Test, DCF-Test entfernt, braucht man nicht
+                  -Venatrix-Test, DCF-Test entfernt, braucht man nicht mehr
                   -Mauspfeil wird nach dem Starten von Plexus nicht korrekt angezeigt!? liegt das an der Ini Datei?
                   -nach dem Laden einer Mau-Datei ist die Anzeige korrekt.
                   -Update... Mauspfeil wird jetzt richtig dargestellt (in der Ini-Load-Routine war ein 2Byte Versatz) ->behoben
-                  -1256 Longs frei
+                  -1293 Longs frei
 
 Notizen         : Window 0 = Hauptbildschirm, darf nicht anderweitig genutzt werden !!!
                   Window 1 = Utilitie-Fenster (serielles Terminal, Uhr-Einstellung,Color-Settings, Ram-Monitor,Player,Systemsettings,Baud-Einstellung)
@@ -48,7 +48,6 @@ Notizen         : Window 0 = Hauptbildschirm, darf nicht anderweitig genutzt wer
 
 OBJ
              ios: "reg-ios-Modul"
-             'fp : "dwdFloatString2"
 
 CON
 
@@ -437,7 +436,6 @@ PUB main | i
 
     ios.start
 
-    'ios.startfat
     ios.sdmount                                                                                               'sd-card mounten
     mountmarker:=1                                                                                            'mount-marker
 
@@ -459,7 +457,6 @@ PUB main | i
         windownum[i]:=windowx[i]:=windowxx[i]:=windowy[i]:=windowyy[i]:=-1                                    'Windowwerte initialisieren
         buttonx[i]:=buttony[i]:=-1
     '****************** Hauptbildschirm ******************************************
-    Scan_Expansion_Card                                                                                       'nach Venatrix scannen
 
     ios.loadtilebuffer(SYS_FONT,2816)                                                                         'Systemfont aus E-Ram nach Bella laden
     Bildschirmaufbau
@@ -759,7 +756,6 @@ PRI os_cmdinput | x,y ,i,col,dk,kb,b,kl,fst,term_aus,{kn,bd,}tmp,dl
                                 popupy:popupselect(@info,popupx,popupy)
                                        infofenster(12,10,27,20,ram_txt(32),1)                                                    'SD-Card-Info-Fenster anzeigen
                                        SD_CARD_INFO                                                                              'Fenster mit Info's füllen
-'                                       keyboardscan("I")
                                        do_restore:=1                                                          'Info-Fenster-Hintergrund soll wieder hergestellt werden
 
                               popupy+1:if mountmarker==1
@@ -894,7 +890,6 @@ PRI os_cmdinput | x,y ,i,col,dk,kb,b,kl,fst,term_aus,{kn,bd,}tmp,dl
                 col:=((x-7)*4)+(((y-4)*16)*4)
                 print_win(string("   "),19,9)
                 printdec_win(col,9,19)                                                                        'Farbwert dezimal anzeigen
-                'system_setting[pfeil-9]:=col
                 farbe(pfeil-9,col)
                 refreshpaint
 
@@ -1033,11 +1028,7 @@ PRI os_cmdinput | x,y ,i,col,dk,kb,b,kl,fst,term_aus,{kn,bd,}tmp,dl
                     popup_info_weg
                     selection:=y-3
                     kz:=selection
-                    'if util==5
-                    '   getflashfilename(selection+scrollanfang)
-                    'if util==11
                     getfilename(selection+scrollanfang)                                                       'selektierte Datei nr
-                    'if y<>y_old                                                                               'nur einmal hervorheben
                     highlight++                                                                            'angeklickter Dateiname wird hervorgehoben
                     if highlight>0                                                                         'erster Klick hebt hervor, Popupmenueklick wird ignoriert da -1
                        highlight_selection(y)
@@ -1367,7 +1358,6 @@ pri keyboardscan(k)|i,err,a,c,d,e,formatok                                      
              case util                                                                                        'Utilfenster, bei dem bei Druck auf OK etwas gespeichert werden muss
                     0,2:close_all_win                                                                         'Cogs-Fenster, Systeminfo
                     3:tab_taste:=0
-                      'ios.settime(sekunde,minute,stunde,today,tag,monat,jahr)
                       ios.setdate(tag)                                                                        'Systemuhr setzen
                       ios.setmonth(monat)
                       ios.setyear(jahr)
@@ -1412,8 +1402,6 @@ pri keyboardscan(k)|i,err,a,c,d,e,formatok                                      
                  if util==11
                     playerstop
                     getfilename(selection+scrollanfang)
-                    'ios.eraseEEPROM
-                    'flash_eeprom                                                                              'oberen EEPROM-Bereich von Bellatrix mit der selektierten Datei flashen
 
          "C","c":if util==11                                                                                  'Nur im Dateifenster
                     copy_marker:=1                                                                            'Kopieren
@@ -1433,7 +1421,6 @@ pri keyboardscan(k)|i,err,a,c,d,e,formatok                                      
 
          "D","d":if util==8                                                                                   'Systemsettings
                     system_setting[3]:=toogle_value(system_setting[3],30,8,1)                                                       'DCF-Empfänger benutzen oder nicht
-                    'dcf_onoff                                                                                 'DCF-Empfänger starten/stoppen
 
          "E","e":if util==5
                     dump_ram:=0
@@ -1554,7 +1541,7 @@ pri keyboardscan(k)|i,err,a,c,d,e,formatok                                      
                  if util==5
                     sanduhr(Hex_adresse/$8000)
 
-         "S","s":if util==11 'or util==5                                                                                 'Show Nur im Dateifenster
+         "S","s":if util==11 'or util==5                                                                      'Show Nur im Dateifenster
                     ifnot infomarker
                           fensterweg                                                                          'Dateifenster löschen
                           textfenster                                                                         'Textfenster öffnen
@@ -1695,7 +1682,7 @@ pri keyboardscan(k)|i,err,a,c,d,e,formatok                                      
              Kalender
          219:cmd_reboot(1)                                                                                    'F12 - Warmstart-Reboot
 
-pri YMODEM_Tool(mode)|a,i                                                                                     'Aufruf der YMODEM-Routine
+{pri YMODEM_Tool(mode)|a,i                                                                                     'Aufruf der YMODEM-Routine (Flash)
     a:=YMODEM_RAM
     i:=0
     if mode
@@ -1703,8 +1690,8 @@ pri YMODEM_Tool(mode)|a,i                                                       
               ios.ram_wrbyte(filestring[i++],a++)                                                             'Dateiname merken
     ios.ram_wrbyte(mode,YMODEM_RAM+15)                                                                        'was soll gemacht werden (senden/empfangen)
     run_sys(F2_KEY,1)                                                                                         'Rückkehraktion
-
-{pri YMODEM_Tool(mode)|a,i                                                                                     'Aufruf der YMODEM-Routine
+}
+pri YMODEM_Tool(mode)|a,i                                                                                     'Aufruf der YMODEM-Routine
     a:=YMODEM_RAM
     i:=0
     if mode
@@ -1712,7 +1699,7 @@ pri YMODEM_Tool(mode)|a,i                                                       
               ios.ram_wrbyte(filestring[i++],a++)                                                             'Dateiname merken
     ios.ram_wrbyte(mode,YMODEM_RAM+15)                                                                        'was soll gemacht werden (senden/empfangen)
     run_sys(dll_txt(1),F2_KEY)                                                                                   'Rückkehraktion
-}
+
 pri abfrage_Link_del(n)                                                                                       'Abfrage, ob link gelöscht werden soll
 
              error(29)                                                                                        'Messagebox-Link-löschen?
@@ -1721,32 +1708,20 @@ pri abfrage_Link_del(n)                                                         
              if abfrage                                                                                       'OK-Taste abfragen
                 Delete_Link(n,(n*5)+8)                                                                        'Link löschen
 
-{pri run_sys(mark,n)              'starten der eingebetteten Programme
+{pri run_sys(mark,n)              'starten der eingebetteten Programme (Flash)
     playerstop
     ios.ram_wrlong(userdir,MARKER_RAM)                                                                        'aktuellen Verzeichnismarker merken
     ios.ram_wrbyte(mark,RETURN_POINT)                                                                         'Aktion nach Rückkehr setzen
     ios.ram_wrbyte(verzeichnis_counter,RETURN_POINT+1)                                                        'Verzeichnis-Tiefenzähler muss auch gemerkt werden
     sanduhr(n)}
-pri run_sys(str,mark)              'starten der eingebetteten Programme
+pri run_sys(str,mark)              'starten der eingebetteten Programme (SD-Card)
     playerstop
     ios.ram_wrlong(userdir,MARKER_RAM)                                                                        'aktuellen Verzeichnismarker merken
     ios.ram_wrbyte(mark,RETURN_POINT)                                                                         'Aktion nach Rückkehr setzen
     ios.ram_wrbyte(verzeichnis_counter,RETURN_POINT+1)                                                        'Verzeichnis-Tiefenzähler muss auch gemerkt werden
     activate_dirmarker(systemdir)
     sanduhr(str)
-{pri run_sys(str,mark)              'starten der eingebetteten Programme
-    playerstop
-    ios.ram_wrlong(userdir,MARKER_RAM)                                                                        'aktuellen Verzeichnismarker merken
-    ios.ram_wrbyte(mark,RETURN_POINT)                                                                         'Aktion nach Rückkehr setzen
-    ios.ram_wrbyte(verzeichnis_counter,RETURN_POINT+1)                                                        'Verzeichnis-Tiefenzähler muss auch gemerkt werden
-    activate_dirmarker(systemdir)
-    sanduhr(str)
-}
-{pri sanduhr(str)
-    ifnot OPEN_FILE(str)
-          ios.mousepointer(Hour_Glass)                                                                        'Sanduhr anzeigen
-          ios.ldbin(str)
-}
+
 {
 YMODEM   =  '1 $8000Plexus sitzt an Stelle 0 im Map-RAM ->Ymodem_dll an Position 1
 BASRUN   =     $10000
@@ -1778,7 +1753,7 @@ pri reset_Highlight                                                             
     bytefill(@filestring_old,0,12)                                                                            'Dateinamen-Puffer löschen
 
 PRI highlight_selection(position)                                                                             'Dateiname mit einem farbigen Balken hervorheben
-  ' printdec_win(y_old,1,1)
+
   if (util==11 or util==5) and position>3                                                                                  'nur im Dateifenster ab position y==4 hervorheben
     if highlight                                                                                              'erstes mal Datei angeklickt(keine Old-Parameter)
 
@@ -1804,17 +1779,13 @@ PRI OPEN_FILE(str):err
 
 pri start_file(mode)|a,c
 
-    'status_onoff
     ifnot OPEN_FILE(@filestring)
 
           case mode
           '***************************** BIN-Dateien starten ***********************************
-               1:'ios.ram_wrbyte(0,START_FLAG)
-                 ios.ldbin(@filestring)
+               1:ios.ldbin(@filestring)
                2:ios.belload(@filestring)
                3:ios.admload(@filestring)
-               4:'if venatrix
-                 '   ios.venload(@filestring)
 
                5:ios.paraset(@filestring)
                  ios.ram_wrbyte(0,START_FLAG)
@@ -1992,24 +1963,7 @@ PRI time|s                                                                      
     timezaehler++
     if timezaehler>190
        timezaehler:=0
-       'ios.readClock
        s:=ios.getminutes
-'       Status_extern(ios.dcf_sync,system_setting[3],170,34,29,hcolstatus,green,black)                          'Anzeige des aktuellen Status in der Statusleiste neben der Uhr
-'       if venatrix==1
-'          ios.bus_putchar3(50)                                                                                 'Status HC05 abfragen
-'          bl_connect:=ios.bus_getchar3
-'          Status_extern(bl_connect,system_setting[4],169,19,0,titelhcol,blue,white)                            'Anzeige des aktuellen Status in der Titelzeile
-
-          'printfont(ios.dht_temp,titelhcol,0,act_color,12,1)                                                   'Anzeige DHT22 Temperatur
-'          printfont(string("C "),titelhcol,0,act_color,17,1)
-'          repeat 10000
-          'printfont(ios.dht_hum,titelhcol,0,act_color,24,1)                                                    'Anzeige DHT22 Feuchte
-'          printfont(string("%"),titelhcol,0,act_color,27,1)
-
-'       else
-'          ios.bus_putchar1(254)                                                                                 'Status HC05 abfragen
-'          bl_connect:=ios.bus_getchar1
-'          Status_extern(bl_connect,system_setting[4],169,19,0,titelhcol,blue,white)                                'Anzeige des aktuellen Status in der Titelzeile
        if s<>tmptime
           displaytime
 
@@ -2027,18 +1981,6 @@ PRI displaytime|h,m
        'ios.displaytile(16,hcolstatus,0,statustextcol,29,39)                                                   'leerfeld
        tmptime:=m
        date
-
-
-{pri Status_extern(wert1,wert2,tnr_act,x,y,f1,col,f3)
-
-          if wert2==1                                                                                         'Externe Komponente in Settingmenue ausgewählt?
-             if wert1==1
-                ios.displaytile(tnr_act,f1,col,f3,y,x)                                                 'Status ok-anzeigen
-             else
-                ios.displaytile(tnr_act,f1,grey,0,y,x)                                                 'Symbol grau
-          else
-             ios.displaytile(16,f1,titeltextcol,0,y,x)                                                 'Ohne externe Komponente arbeiten (kein Symbol)
-}
 
 PRI date|t,m,j
       t:=ios.getdate
@@ -2304,7 +2246,6 @@ PRI textfenster
     Programmfenster(4,ram_txt(41))
 
 PRI Startmenue
-    'ios.backup_area(0,16,9,28,BRAM)
     popup(0,16,9,28)
     print_titel(ram_txt(42),0,16)
     separator(0,17,9)
@@ -2330,12 +2271,6 @@ PRI Coreanzeige|c[4],i,cogs,loops
     c[1]:=ios.belgetcogs
     c[2]:=ios.reggetcogs
     loops:=3
-    'Scan_Expansion_Card                                                                                       'nach Venatrix-Karte scannen
-    {if venatrix
-       c[3]:=ios.VEN_GETCOGS
-       print_win(ram_txt(58),8,14)
-       loops:=4
-    }
     i:=0
     cogs:=1
     repeat loops
@@ -2349,7 +2284,6 @@ PRI Coreanzeige|c[4],i,cogs,loops
          i++
 
     button(1,@butOK,15,16)
-    'button(2,@Abbr,20,16)
 
 PRI Setting_window|a
 
@@ -2374,8 +2308,11 @@ PRI Setting_window|a
     print_win_rev(ram_txt(73),3,13)                                                                           'Detect-Hardware
     print_win(ram_txt(60),3,15)                                                                               'Venatrix-BUS
     print_win(ram_txt(61),3,17)                                                                               'Sepia-Card
-    Scan_Expansion_Card                                                                                       'nach Sepia-und Venatrix-Karte scannen
-    Show_Card_ON_OFF                                                                                          'anzeigen, ob die Karten da sind
+    if sepia==0
+       print_win(@off,16,17)
+    else
+       print_win(@on,16,17)
+                                                                                          'anzeigen, ob die Karten da sind
 
     rahmen(21,13,33,18)                                                                                       'noch leerer Rahmen
     print_win_rev(string("Flash-Rom"),22,13)
@@ -2395,50 +2332,18 @@ PRI Setting_window|a
     button(1,@butOK,10,20)
     button(2,@Abbr,20,20)
 
-PRI Scan_Expansion_Card|ackn,adr,counter_s,counter_V
 
-'######################################################################################################
-'#   Durch diverse Versuche hat sich herausgestellt, das die Ping-Funktion allein nicht ausreicht um  #
-'#   das Vorhandensein der Sepia oder Venatrix-Karte zu detektieren, da eine nicht angeschlossene     #
-'#   eine Null zurückgibt, genauso wie ein angeschlossener I2C-Teilnehmer. Deshalb wird beim Scan die #
-'#   Anzahl Nullen mit der Gesamtanzahl der Adressen verglichen. Ist die Anzahl zurückgegebener Nullen#
-'#   mit der Anzahl Adressen identisch, so ist offensichtlich keine Karte vorhanden. Diese Methode    #
-'#   verhindert Fehldetektionen und gerade in Verbindung mit der Venatrixkarte ein Festfahren des HIVE#
-'#   zum Beispiel bei Aufruf der Cog-Anzeige.                                                         #
-'######################################################################################################
-
-    ios.plxHalt
-       Sepia:=0
-       'venatrix:=0
-       counter_s:=0
-       counter_v:=0
-       repeat adr from 32 to 79                                                                               'standard-Sepia-Adressbereich $20-$4f
-              ackn := ios.plxping(adr)
-
-              ifnot ackn
-                    counter_s++                                                                               'Anzahl der vorhandenen I2C-Teilnehmer
-
-       'repeat adr from 0 to 5
-       '       if ios.plxping(adr)
-       '          counter_v++
-
-    ios.plxRun
-    if counter_s <47
-       sepia:=1
-'    if counter_v==5
-'       Venatrix:=1
-
-PRI Show_Card_ON_OFF
+{PRI Show_Card_ON_OFF
     if sepia==0
        print_win(@off,16,17)
     else
        print_win(@on,16,17)
 
     'if venatrix==0
-       print_win(@off,16,15)
+   '    print_win(@off,16,15)
     'else
     '   print_win(@on,16,15)
-
+}
 con '********************************************** Verwaltung der Desktopverknüpfungen ******************************************************************************************
 PRI Make_link(dm)|i,n                                                                                         'Desktopverknüpfung erzeugen
     bytemove(@textline,@filestring,12)                                                                        '@filestring merken
@@ -3163,27 +3068,7 @@ PRI shell|i
     ios.displaytile(166,titelhcol,winhcol,winframecol,0,34)
     ios.displaytile(165,0,titelhcol,shellhcol,0,35)
 
-    '########Unterleiste für Temp-Anzeige###############
-    {if venatrix
-       ios.displaytile(164,0,titelhcol,shellhcol,1,11)
-       ios.displaytile(165,0,titelhcol,shellhcol,1,28)
-       repeat i from 12 to 27
-              ios.displaytile(16,titelhcol,0,shellhcol,1,i)}
-    '###################################################
-    'status_onoff
 
-{pri status_onoff
-
-    if system_setting[5]
-       show_keyscan
-       ios.display2dbox(hcolstatus,29,9,29,30,0)
-       ios.displaytile(145,hcolstatus,shellhcol,0,29,31)
-       ios.displaytile(144,hcolstatus,shellhcol,0,29,8)
-       print_status(@filestring,14,29)
-    else
-       ios.display2dbox(shellhcol,29,8,29,31,0)
-    panel
-}
 
 {pri del_keyscan
     shell
@@ -3463,7 +3348,8 @@ PRI printfont(str1,a,b,c,d,e)|f
             e++
          ios.displayTile(f-16,a,b,c,e,d)                                                                         'einzelnes Tile anzeigen   ('displayTile(tnr,pcol,scol,tcol, row, column))
          d++
-    return d
+
+    'return d
 
 PRI printdec(value,y,xx,hint,vor) | i ,c ,x                                                                   'screen: dezimalen zahlenwert auf bildschirm ausgeben
 
